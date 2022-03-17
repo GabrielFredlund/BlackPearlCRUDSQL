@@ -11,7 +11,7 @@ using NecklaceDB;
 namespace NecklaceDB.Migrations
 {
     [DbContext(typeof(NecklaceDbContext))]
-    [Migration("20220317073858_initial-migration")]
+    [Migration("20220317083736_initial-migration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

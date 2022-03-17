@@ -18,10 +18,12 @@ namespace NecklaceApplication
                 return; //Terminate if not build correctly
 
             #region Uncomment to seed and query the Database
+            
             SeedDataBase();
             QueryDatabaseAsync().Wait();
             QueryDatabase_Linq();
             QueryDatabase_DataModel_Linq();
+            
             #endregion
         }
 
@@ -61,10 +63,10 @@ namespace NecklaceApplication
                 }
 
                 //Add Pearls and Necklaces to the Database
-                NecklaceList.ForEach(
-                    n => n.Pearls.ForEach(
-                        p => db.Pearls.Add(p)));
-                NecklaceList.ForEach(n => db.Necklaces.Add(n));
+                foreach (var n in NecklaceList)
+                {
+                    db.Necklaces.Add(n);
+                }
 
                 db.SaveChanges();
             }
