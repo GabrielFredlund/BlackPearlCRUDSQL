@@ -19,11 +19,12 @@ namespace NecklaceApplication
 
             #region Uncomment to seed and query the Database
             
-            SeedDataBase();
+            
+            //SeedDataBase();
             QueryDatabaseAsync().Wait();
             QueryDatabase_Linq();
             QueryDatabase_DataModel_Linq();
-            
+          
             #endregion
         }
 
@@ -113,8 +114,8 @@ namespace NecklaceApplication
             {
                 //Use .AsEnumerable() to make sure the Db request is fully translated to be managed by Linq.
                 //Use ToList() to ensure the Model is fully loaded
-                var necklaces = db.Necklaces.AsEnumerable().ToList();
-                var pearls = db.Pearls.AsEnumerable().ToList();
+                var necklaces = db.Necklaces.ToList();
+                var pearls = db.Pearls.ToList();
 
                 var MostExpensiveNecklace = necklaces.OrderByDescending(n => n.Price).First();
                 Console.WriteLine($"Most expensive Necklace: {MostExpensiveNecklace.NecklaceID}, Nr Of Pearls: {MostExpensiveNecklace.Pearls.Count()}, Price: {MostExpensiveNecklace.Pearls.Sum(p => p.Price):C2}");
