@@ -17,16 +17,12 @@ namespace NecklaceApplication
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
-            #region Uncomment to seed and query the Database
-
-
             //SeedDataBase();
             //QueryDatabaseAsync().Wait();
             //QueryDatabase_Linq();
             //QueryDatabase_DataModel_Linq();
-            QueryDatabaseCRUD.Wait();
+            //QueryDatabaseCRUD.Wait();
           
-            #endregion
         }
 
         private static bool BuildOptions()
