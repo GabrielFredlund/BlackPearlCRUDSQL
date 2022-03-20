@@ -18,12 +18,13 @@ namespace NecklaceApplication
                 return; //Terminate if not build correctly
 
             #region Uncomment to seed and query the Database
-            
-            
+
+
             //SeedDataBase();
-            QueryDatabaseAsync().Wait();
-            QueryDatabase_Linq();
-            QueryDatabase_DataModel_Linq();
+            //QueryDatabaseAsync().Wait();
+            //QueryDatabase_Linq();
+            //QueryDatabase_DataModel_Linq();
+            QueryDatabaseCRUD.Wait();
           
             #endregion
         }
@@ -128,5 +129,11 @@ namespace NecklaceApplication
             }
         }
         #endregion
+
+        private static async Task QueryDatabaseCRUD()
+        {
+            // Implement the CRUD operations/tests here
+        }
+
     }
 }
