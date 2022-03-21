@@ -3,7 +3,7 @@ using NecklaceModels;
 
 namespace NecklaceRepository
 {
-    internal class NecklaceRepository : INecklaceRepository
+    public class NecklaceRepository : INecklaceRepository
     {
         public Task<Necklace> CreateAsync(Necklace necklace)
         {

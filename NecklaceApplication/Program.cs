@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+//using NecklaceRepository;
 
 namespace NecklaceApplication
 {
@@ -128,6 +129,7 @@ namespace NecklaceApplication
 
         private static async Task QueryDatabaseCRUD()
         {
+            var _repo = new NecklaceRepository.NecklaceRepository();
             // Implement the CRUD operations/tests here
         }
 
