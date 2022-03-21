@@ -17,11 +17,11 @@ namespace NecklaceApplication
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
-            //SeedDataBase();
-            //QueryDatabaseAsync().Wait();
-            //QueryDatabase_Linq();
-            //QueryDatabase_DataModel_Linq();
-            //QueryDatabaseCRUD.Wait();
+            SeedDataBase();
+            QueryDatabaseAsync().Wait();
+            QueryDatabase_Linq();
+            QueryDatabase_DataModel_Linq();
+            QueryDatabaseCRUD.Wait();
           
         }
 
@@ -128,7 +128,7 @@ namespace NecklaceApplication
 
         private static async Task QueryDatabaseCRUD()
         {
-            // Implement the CRUD operations/tests here
+            // Implement the CRUD operations/tests here testing here
         }
 
     }
