@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NecklaceApplication\NecklaceApplication.csproj" />
     <ProjectReference Include="..\NecklaceDB\NecklaceDB.csproj" />
     <ProjectReference Include="..\NecklaceModels\NecklaceModels.csproj" />
   </ItemGroup>

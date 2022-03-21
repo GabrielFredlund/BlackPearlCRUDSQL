@@ -1,28 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using NecklaceDB;
 using NecklaceModels;
+using NecklaceRepository;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace NecklaceApplication
 {
+    // vet inte om den ska vara  med
+    static class MyLinqExtensions
+    {
+        public static void Print<T>(this IEnumerable<T> collection)
+        {
+            collection.ToList().ForEach(item => Console.WriteLine(item));
+        }
+    }
     class Program
     {
-        private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
+      private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
         static void Main(string[] args)
         {
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
             //SeedDataBase();
-            //QueryDatabaseAsync().Wait();
+            QueryDatabaseAsync().Wait();
             //QueryDatabase_Linq();
             //QueryDatabase_DataModel_Linq();
-            //QueryDatabaseCRUD.Wait();
-          
+            QueryDatabaseCRUD().Wait();
+
+            Console.WriteLine("\nPress any key to terminate");
+            Console.ReadKey();
         }
 
         private static bool BuildOptions()
@@ -45,8 +59,6 @@ namespace NecklaceApplication
             _optionsBuilder.UseSqlServer(connectionString);
             return true;
         }
-
-        #region Uncomment to seed and query the Database
 
         private static void SeedDataBase()
         {
@@ -124,11 +136,65 @@ namespace NecklaceApplication
                 }
             }
         }
-        #endregion
 
+
+        // För pärlan
         private static async Task QueryDatabaseCRUD()
         {
-            // Implement the CRUD operations/tests here
+            Console.WriteLine("\nPärlan CRUD");
+            Console.WriteLine("--------------------");
+
+            using (var db = new NecklaceDbContext(_optionsBuilder.Options))
+            {
+                var _repo = new PearlRepository(db);
+
+                //    //First 5 Halsbanden FUNKAR
+                Console.WriteLine("Testing ReadAllAsync()");
+            var AllPearls = await _repo.ReadAllAsync();// läser in alla
+            Console.WriteLine($"Nr of Necklace {AllPearls.Count()}");
+            Console.WriteLine($"\nFirst 5 Necklace");
+            AllPearls.Take(5).Print();
+
+            // loopa igenom alla pärlor
+            //foreach (var VARIABLE in AllPearls)
+            //{
+            //    Console.WriteLine($"LARS {VARIABLE}");
+            //}
+
+            }
+
+
+
+
+
+
+            // För halsbandet
+            Console.WriteLine("\nHalsbandet CRUD");
+            Console.WriteLine("--------------------");
+
+            using (var db = new NecklaceDbContext(_optionsBuilder.Options))
+            {
+                var _repo = new NecklaceRepository.NecklaceRepository();
+
+                //First 5 Halsbanden FUNKAR
+                Console.WriteLine("Testing ReadAllAsync()");
+                var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
+                Console.WriteLine($"Nr of Necklace {AllNecklaces.Count()}");
+                Console.WriteLine($"\nFirst 5 Necklace");
+                AllNecklaces.Take(5).Print();
+
+                // loopa igenom alla pärlor
+                //foreach (var VARIABLE in AllNecklaces)
+                //{
+                //    Console.WriteLine($"LARS {VARIABLE}");
+                //}
+
+
+
+
+
+
+            }
         }
 
     }
