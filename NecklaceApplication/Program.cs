@@ -155,7 +155,7 @@ namespace NecklaceApplication
             Console.WriteLine($"\nFirst 5 Necklace");
             AllPearls.Take(5).Print();
 
-                // loopa igenom alla pärlor
+                //loopa igenom alla pärlor
                 //foreach (var VARIABLE in AllPearls)
                 //{
                 //    Console.WriteLine($"LARS {VARIABLE}");
@@ -195,7 +195,32 @@ namespace NecklaceApplication
                 //else
                 //    Console.WriteLine("ERROR: Pearls not equal");
 
+
+
+
+                //Console.WriteLine("\nTesting DeleteAsync()");
+
+                var Pearl1ToDelete = AllPearls.Last();
+                var DelPearl1 = await _repo.DeleteAsync(Pearl1ToDelete.PearlID);
+                Console.WriteLine($"Pearl to delete.\n{Pearl1ToDelete}");
+                Console.WriteLine($"Deleted Pearl.\n{DelPearl1}");
+
+                if (DelPearl1 != null && DelPearl1 == Pearl1ToDelete)
+                    Console.WriteLine("Pearl Equal");
+                else
+                    Console.WriteLine("ERROR: Pearl not equal");
+
+                var DelPearl2 = await _repo.ReadAsync(DelPearl1.PearlID);
+                if (DelPearl2 != null)
+                    Console.WriteLine("ERROR: Pearl not removed");
+                else
+                    Console.WriteLine("Pearl confirmed removed from Db");
+
             }
+
+
+
+
 
 
 
@@ -232,7 +257,7 @@ namespace NecklaceApplication
                 else
                     Console.WriteLine("ERROR: Necklaces not equal");
 
-                Console.WriteLine($"Halsband 1 {LastNecklacet1}");
+                 Console.WriteLine($"Halsband 1 {LastNecklacet1}");
                 Console.WriteLine($"Halsband 2 {LastNecklace2}");
 
 
@@ -252,6 +277,27 @@ namespace NecklaceApplication
                 //    Console.WriteLine("Necklace Equal");
                 //else
                 //    Console.WriteLine("ERROR: Necklace not equal");
+
+
+
+                //Console.WriteLine("\nTesting DeleteAsync()");
+
+                var LastNecklacet1ToDelete = AllNecklaces.Last();
+                var DelNecklacet1 = await _repo.DeleteAsync(LastNecklacet1ToDelete.NecklaceID);
+                Console.WriteLine($"Necklace to delete.\n{LastNecklacet1ToDelete}");
+
+                Console.WriteLine($"Deleted Necklace.\n{DelNecklacet1}");
+
+                if (DelNecklacet1 != null && DelNecklacet1 == LastNecklacet1ToDelete)
+                    Console.WriteLine("Necklace Equal");
+                else
+                    Console.WriteLine("ERROR: Necklace not equal");
+
+                var DelNecklacet2 = await _repo.ReadAsync(DelNecklacet1.NecklaceID);
+                if (DelNecklacet2 != null)
+                    Console.WriteLine("ERROR: Necklace not removed");
+                else
+                    Console.WriteLine("Necklace confirmed removed from Db");
 
 
             }

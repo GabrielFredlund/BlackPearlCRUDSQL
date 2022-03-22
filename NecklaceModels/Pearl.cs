@@ -52,7 +52,8 @@ namespace NecklaceModels
             }
         }
 
-        public override string ToString() => $"{Size}mm {Color} {Shape} {Type} pearl. Price: {Price}";
+        //public override string ToString() => $"PearlID = {PearlID}, NecklaceID: {NecklaceID}, Size: {Size}mm, Color: {Color} Shape: {Shape} Type: {Type} pearl. Price: {Price}";
+        public override string ToString() => $"PearlID = {PearlID}, Color: {Color}";
 
         #region IComparable and IEquatable
         public int CompareTo(Pearl other)
