@@ -13,10 +13,10 @@ namespace NecklaceRepository
         NecklaceDbContext _db = null;
 
 
-        //public NecklaceRepository(NecklaceDbContext db)
-        //{
-        //    _db = db;
-        //}
+        public NecklaceRepository(NecklaceDbContext db)
+        {
+            _db = db;
+        }
 
         // CREATE
         public async Task<Necklace> CreateAsync(Necklace necklace)
@@ -43,7 +43,7 @@ namespace NecklaceRepository
                 return null;
         }
 
-        // ReadAllAsync
+        // ReadAllAsync  // hör blir det fel
         public async Task<IEnumerable<Necklace>> ReadAllAsync()
         {
             return await Task.Run(() => _db.Necklaces);

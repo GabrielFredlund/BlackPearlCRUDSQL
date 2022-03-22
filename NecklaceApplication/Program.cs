@@ -155,16 +155,47 @@ namespace NecklaceApplication
             Console.WriteLine($"\nFirst 5 Necklace");
             AllPearls.Take(5).Print();
 
-            // loopa igenom alla pärlor
-            //foreach (var VARIABLE in AllPearls)
-            //{
-            //    Console.WriteLine($"LARS {VARIABLE}");
-            //}
+                // loopa igenom alla pärlor
+                //foreach (var VARIABLE in AllPearls)
+                //{
+                //    Console.WriteLine($"LARS {VARIABLE}");
+                //}
+
+
+
+                //FUNKAR
+                Console.WriteLine("\nTesting ReadAsync()");
+                var LastPearl1 = AllPearls.Last();
+                var LastPearl2 = await _repo.ReadAsync(LastPearl1.PearlID);
+                Console.WriteLine($"Last Pearl.\n{LastPearl1}");
+                Console.WriteLine($"Read Pearl with NecklaceID == Last Necklace\n{LastPearl2}");
+                if (LastPearl1 == LastPearl2)
+                    Console.WriteLine("Pearls Equal");
+                else
+                    Console.WriteLine("ERROR: Pearl not equal");
+
+                Console.WriteLine($"Pearl LAST 1 {LastPearl1}");
+                Console.WriteLine($"Pearl LAST 2 {LastPearl2}");
+
+
+
+
+                // CREATE FUNGERAR INTE FEL I DATABASEN
+                //Console.WriteLine("\nTesting CreateAsync()");
+                //var NewPearl1 = Pearl.Factory.CreateRandomPearl();
+                //var NewPearl2 = await _repo.CreateAsync(NewPearl1);
+                //var NewPearl3 = await _repo.ReadAsync(NewPearl2.PearlID);
+
+                //Console.WriteLine($"Pearl created.\n{NewPearl1}");
+                //Console.WriteLine($"Pearl Inserted in Db.\n{NewPearl2}");
+                //Console.WriteLine($"Pearl ReadAsync from Db.\n{NewPearl3}");
+
+                //if (NewPearl1 == NewPearl2 && NewPearl1 == NewPearl3)
+                //    Console.WriteLine("Pearls Equal");
+                //else
+                //    Console.WriteLine("ERROR: Pearls not equal");
 
             }
-
-
-
 
 
 
@@ -174,10 +205,10 @@ namespace NecklaceApplication
 
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
-                var _repo = new NecklaceRepository.NecklaceRepository();
+                var _repo = new NecklaceRepository.NecklaceRepository(db);
 
                 //First 5 Halsbanden FUNKAR
-                Console.WriteLine("Testing ReadAllAsync()");
+                //Console.WriteLine("Testing ReadAllAsync()");
                 var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Nr of Necklace {AllNecklaces.Count()}");
                 Console.WriteLine($"\nFirst 5 Necklace");
@@ -190,8 +221,37 @@ namespace NecklaceApplication
                 //}
 
 
+                // FUNKAR Nästan
+                Console.WriteLine("\nTesting ReadAsync()");
+                var LastNecklacet1 = AllNecklaces.Last();
+                var LastNecklace2 = await _repo.ReadAsync(LastNecklacet1.NecklaceID);
+                Console.WriteLine($"Last Necklaces with Pearls.\n{LastNecklacet1}");
+                Console.WriteLine($"Read Necklaces with NecklacesID == Last Necklaces\n{LastNecklace2}");
+                if (LastNecklacet1 == LastNecklace2)
+                    Console.WriteLine("Necklaces Equal");
+                else
+                    Console.WriteLine("ERROR: Necklaces not equal");
+
+                Console.WriteLine($"Halsband 1 {LastNecklacet1}");
+                Console.WriteLine($"Halsband 2 {LastNecklace2}");
 
 
+
+
+                //// CREATE halsband  FUNGERAR INTE FEL I DATABASEN
+                ////Console.WriteLine("\nTesting CreateAsync()");
+                //var NewNecklace1 = Necklace.Factory.CreateRandomNecklace(1);
+                //var NewNecklace2 = await _repo.CreateAsync(NewNecklace1);
+                //var NewNecklace3 = await _repo.ReadAsync(NewNecklace2.NecklaceID);
+
+                //Console.WriteLine($"Necklace created.\n{NewNecklace1}");
+                //Console.WriteLine($"Necklace Inserted in Db.\n{NewNecklace2}");
+                //Console.WriteLine($"Necklace ReadAsync from Db.\n{NewNecklace3}");
+
+                //if (NewNecklace1 == NewNecklace2 && NewNecklace1 == NewNecklace3)
+                //    Console.WriteLine("Necklace Equal");
+                //else
+                //    Console.WriteLine("ERROR: Necklace not equal");
 
 
             }

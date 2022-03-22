@@ -49,15 +49,17 @@ namespace NecklaceModels
            return c;
         }
 
-        public override string ToString()
-        {
-            string sRet = $"Necklace has the following pearls:\n";
-            foreach (var item in Pearls)
-            {
-                sRet += $"{item}\n";
-            }
-            return sRet;
-        }
+        //public override string ToString()
+        //{
+        //    string sRet = $"Necklace has the following pearls:\n";
+        //    foreach (var item in Pearls)
+        //    {
+        //        sRet += $"{item}\n";
+        //    }
+        //    return sRet;
+        //}
+
+        public override string ToString() => $"ID: {NecklaceID}";
 
 
         public void Sort() => Pearls.Sort();
