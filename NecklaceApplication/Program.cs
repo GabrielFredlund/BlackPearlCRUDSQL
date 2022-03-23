@@ -200,8 +200,20 @@ namespace NecklaceApplication
                     Console.WriteLine("Error: Pearls are not equal.");
 
 
-            }
+                LastPearl1.Size += 123;
+                var LastPearl3 = await _repo.UpdateAsync(LastPearl1);
+                Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl1.PearlID == LastPearl2.PearlID}");
+                if (LastPearl1.Size == LastPearl3.Size)
+                {
+                    Console.WriteLine("Necklace updated");
+                    LastPearl3.Size = 25;
 
+                    LastPearl3 = await _repo.UpdateAsync(LastPearl3);
+                    Console.WriteLine($"Last Pearl with updated sizes \n{LastPearl3}");
+
+                }
+                else
+                    Console.WriteLine("Error: Pearl is not updated");
            
 
 
