@@ -19,12 +19,12 @@ namespace NecklaceApplication
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
-            SeedDataBase();
-            QueryDatabaseAsync().Wait();
-            QueryDatabase_Linq();
-            QueryDatabase_DataModel_Linq();
-            QueryDatabaseCRUD.Wait();
-          
+            //SeedDataBase();
+            //QueryDatabaseAsync().Wait();
+            //QueryDatabase_Linq();
+            //QueryDatabase_DataModel_Linq();
+            QueryDatabaseCRUD().Wait();
+
         }
 
         private static bool BuildOptions()
@@ -130,6 +130,9 @@ namespace NecklaceApplication
 
         private static async Task QueryDatabaseCRUD()
         {
+            Console.WriteLine("\n\nQuery Database CRUDE");
+            Console.WriteLine("--------------------");
+
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
                 Console.WriteLine("Necklace CRUD Async-Testing");
@@ -220,11 +223,7 @@ namespace NecklaceApplication
 
 
 
-
-
-            
-     
         }
 
-        }
+    }
 }
