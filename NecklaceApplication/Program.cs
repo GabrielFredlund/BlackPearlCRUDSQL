@@ -228,6 +228,7 @@ namespace NecklaceApplication
                 Console.WriteLine($"Necklace created.\n{NewNecklace1}");
 
 
+
                 Console.WriteLine("\nTesting DeleteAsync()");
 
                 var LastNecklacet1ToDelete = AllNecklaces.Last();
