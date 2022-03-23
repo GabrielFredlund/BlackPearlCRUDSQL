@@ -11,8 +11,11 @@ using System.IO;
 
 namespace NecklaceApplication
 {
+
     public class Program
     {
+
+
         private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
         static void Main(string[] args)
         {
@@ -155,14 +158,21 @@ namespace NecklaceApplication
                 var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Amount of Necklaces {AllNecklaces.Count()}");
                 Console.WriteLine($"\nFirst 5 Necklaces");
-                var allNecklaces = AllNecklaces.Take(5);
-                Console.WriteLine(allNecklaces);
+                var allNecklaces = AllNecklaces.Take(5).ToList();
+                
+                foreach (var n in allNecklaces)
+                {
+                    
+                    Console.WriteLine($"Necklace with ID: {n.NecklaceID}");
+                }
+
+               
 
                 Console.WriteLine("\nTesting ReadAsync-Necklace");
                 var LastNecklace1 = AllNecklaces.Last();
                 var LastNecklace2 = await _repo.ReadAsync(LastNecklace1.NecklaceID);
-                Console.WriteLine($"Latest Necklace: \n {LastNecklace1}");
-                Console.WriteLine($"Read Necklace with NecklaceID == Last Necklace \n{LastNecklace2}");
+                Console.WriteLine($"Latest Necklace: \n {LastNecklace1.NecklaceID}");
+                Console.WriteLine($"Read Necklace with NecklaceID == Last Necklace \n{LastNecklace2.NecklaceID}");
                 if (LastNecklace1 == LastNecklace2)
                     Console.WriteLine("Necklaces are equal");
                 else
@@ -173,9 +183,11 @@ namespace NecklaceApplication
                 Console.WriteLine("____________________________");
                 var LastNecklacet1ToDelete = AllNecklaces.Last();
                 var DelNecklacet1 = await _repo.DeleteAsync(LastNecklacet1ToDelete.NecklaceID);
-                Console.WriteLine($"Necklace to delete.\n{LastNecklacet1ToDelete}");
+                Console.WriteLine($"Necklace to delete.\n{LastNecklacet1ToDelete.NecklaceID}");
 
-                Console.WriteLine($"Deleted Necklace.\n{DelNecklacet1}");
+                Console.WriteLine($"Necklace was deleted.");
+                Console.WriteLine("______________________");
+
 
                 if (DelNecklacet1 != null && DelNecklacet1 == LastNecklacet1ToDelete)
                     Console.WriteLine("Necklace Equal");
@@ -210,9 +222,13 @@ namespace NecklaceApplication
                 Console.WriteLine("\nTesting ReadAllAsync-Pearl");
                 var AllPearls = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Amount of Pearls {AllPearls.Count()}");
-                Console.WriteLine($"\nFirst 5 Necklace");
-                var allPearls = AllPearls.Take(5);
-                Console.WriteLine(allPearls);
+                Console.WriteLine($"\nFirst 5 Pearls");
+                var allPearls = AllPearls.Take(5).ToList();
+               
+                foreach (var n in allPearls)
+                {
+                    Console.WriteLine(n);
+                }
 
                 Console.WriteLine("\nTesting ReadAsync-Pearl");
                 var LastPearl1 = AllPearls.Last();
@@ -228,7 +244,7 @@ namespace NecklaceApplication
                 Console.WriteLine("\nTesting UpdateAsync-Pearl");
                 LastPearl2.Size = 15;
                 var LastPearl3 = await _repo.UpdateAsync(LastPearl2);
-                Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl2.PearlID} == {LastPearl3.PearlID}");
+                Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl2.Size} == {LastPearl3.Size}");
                 if (LastPearl2.Size == LastPearl3.Size)
                 {
                     Console.WriteLine("Pearl updated");
