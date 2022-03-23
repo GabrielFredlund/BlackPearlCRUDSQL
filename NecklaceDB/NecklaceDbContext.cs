@@ -13,11 +13,12 @@ namespace NecklaceDB
         public DbSet<Necklace> Necklaces { get; set; }
         #endregion
 
-        public NecklaceDbContext() { }
+        public NecklaceDbContext()   
+        {
+        }
         public NecklaceDbContext(DbContextOptions options) : base(options)
         { }
 
-        #region Uncomment to create the Data model
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +29,6 @@ namespace NecklaceDB
             }
             base.OnConfiguring(optionsBuilder);
         }
-        #endregion
+        
     }
 }

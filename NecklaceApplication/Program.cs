@@ -11,7 +11,7 @@ using System.IO;
 
 namespace NecklaceApplication
 {
-   public class Program
+    public class Program
     {
         private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
         static void Main(string[] args)
@@ -133,9 +133,9 @@ namespace NecklaceApplication
             Console.WriteLine("\n\nQuery Database CRUDE");
             Console.WriteLine("--------------------");
 
-        
 
-            
+
+
 
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
@@ -149,6 +149,7 @@ namespace NecklaceApplication
                 Console.WriteLine("____________________________");
                 var NewNecklace = Necklace.Factory.CreateRandomNecklace(25);
                 await _repo.CreateAsync(NewNecklace);
+                Console.WriteLine("\nNew Necklace added.");
 
                 Console.WriteLine("\nTesting ReadAllAsync-Necklace");
                 var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
@@ -181,30 +182,14 @@ namespace NecklaceApplication
                 else
                     Console.WriteLine("ERROR: Necklace not equal");
 
-                var DelNecklacet2 = await _repo.ReadAsync(DelNecklacet1.NecklaceID);
+                var DelNecklacet2 = await _repo.ReadAsync(LastNecklacet1ToDelete.NecklaceID);
                 if (DelNecklacet2 != null)
                     Console.WriteLine("ERROR: Necklace not removed");
                 else
                     Console.WriteLine("Necklace confirmed removed from Db");
 
 
-                /*
-              -Bänkad för tillfället.
 
-             LastNecklace1.NecklaceID += "_Updated";
-
-
-             var LastNecklace3 = await _repo.UpdateAsync(LastNecklace2);
-             Console.WriteLine($"Last Necklace with updated ID Value \n{LastNecklace1.NecklaceID == LastNecklace3.NecklaceID}");
-
-             if (LastNecklace3.NecklaceID == LastNecklace1.NecklaceID)
-             {
-                 Console.WriteLine("Necklace updated");
-                 LastNecklace3.NecklaceID = LastNecklace3.NecklaceID;
-
-             }
-
-             */
             }
 
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
@@ -241,7 +226,7 @@ namespace NecklaceApplication
 
 
                 Console.WriteLine("\nTesting UpdateAsync-Pearl");
-                LastPearl2.Size += 123;
+                LastPearl2.Size = 15;
                 var LastPearl3 = await _repo.UpdateAsync(LastPearl2);
                 Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl2.PearlID} == {LastPearl3.PearlID}");
                 if (LastPearl2.Size == LastPearl3.Size)
