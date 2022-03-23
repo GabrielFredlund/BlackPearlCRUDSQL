@@ -1,34 +1,65 @@
-﻿
+﻿using System.Text;
+using System.Threading.Tasks;
+using NecklaceDB;
+using NecklaceModels;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NecklaceRepository;
 
 using NecklaceModels;
 
 namespace NecklaceRepository
 {
-    internal class PearlRepository : IPearlRepository
+    public class PearlRepository : IPearlRepository
     {
-        public Task<Pearl> CreateAsync(Pearl pearl)
+        NecklaceDbContext _db = null;
+
+        public async Task<Pearl> CreateAsync(Pearl pearl)
         {
-            throw new NotImplementedException();
+            var added = await _db.Pearls.AddAsync(pearl);
+
+            int affected = await _db.SaveChangesAsync();
+            if (affected == 1)
+                return pearl;
+            else
+                return null;
         }
 
-        public Task<Pearl> DeleteAsync(int pearlId)
+        public async Task<Pearl> DeleteAsync(int pearlId)
         {
-            throw new NotImplementedException();
+            var cusDel = await _db.Pearls.FindAsync(pearlId);// FindAsync är inte eget
+            _db.Pearls.Remove(cusDel);
+
+            int affected = await _db.SaveChangesAsync();// SaveChangesAsync är inte eget
+            if (affected == 1)
+                return cusDel;
+            else
+                return null;
         }
 
-        public Task<IEnumerable<Pearl>> ReadAllAsync()
+        public async Task<IEnumerable<Pearl>> ReadAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => _db.Pearls);
         }
 
-        public Task<Pearl> ReadAsync(int pearlId)
+        public async Task<Pearl> ReadAsync(int pearlId)
         {
-            throw new NotImplementedException();
+            return await _db.Pearls.FindAsync(pearlId); ;
         }
 
-        public Task<Pearl> UpdateAsync(Pearl pearl)
+        public async Task<Pearl> UpdateAsync(Pearl pearl)
         {
-            throw new NotImplementedException();
+            _db.Pearls.Update(pearl); //No db interaction until SaveChangesAsync
+            int affected = await _db.SaveChangesAsync();
+            if (affected == 1)
+                return pearl;
+            else
+                return null;
+        }
+
+        public PearlRepository(NecklaceDbContext db)
+        {
+            _db = db;
         }
     }
 }

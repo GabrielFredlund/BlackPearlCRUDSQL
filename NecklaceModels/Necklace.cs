@@ -31,11 +31,11 @@ namespace NecklaceModels
                 {
                     price += p.Price;
                 }
-                return price;   
+                return price;
             }
         }
 
-        public int Count() => Pearls.Count;    
+        public int Count() => Pearls.Count;
 
         public int Count(PearlType type)
         {
@@ -43,21 +43,23 @@ namespace NecklaceModels
             int c = 0;
             foreach (var item in Pearls)
             {
-                if (type == item.Type)  
-                    c++;    
+                if (type == item.Type)
+                    c++;
             }
-           return c;
+            return c;
         }
 
-        public override string ToString()
-        {
-            string sRet = $"Necklace has the following pearls:\n";
-            foreach (var item in Pearls)
-            {
-                sRet += $"{item}\n";
-            }
-            return sRet;
-        }
+        //public override string ToString()
+        //{
+        //    string sRet = $"Necklace has the following pearls:\n";
+        //    foreach (var item in Pearls)
+        //    {
+        //        sRet += $"{item}\n";
+        //    }
+        //    return sRet;
+        //}
+
+        public override string ToString() => $"ID: {NecklaceID}";
 
 
         public void Sort() => Pearls.Sort();
@@ -85,9 +87,9 @@ namespace NecklaceModels
                 {
                     necklace.Pearls.Add(Pearl.Factory.CreateRandomPearl());
                 }
-                return necklace;    
+                return necklace;
             }
-         }
+        }
         #endregion
 
         #region Methods for writing a neclace to disk
@@ -99,7 +101,7 @@ namespace NecklaceModels
             {
                 writer.WriteLine(this);
             }
-            return fn;    
+            return fn;
         }
         static string fname(string name)
         {

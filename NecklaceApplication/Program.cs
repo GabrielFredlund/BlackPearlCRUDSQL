@@ -1,14 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NecklaceRepository;
 using NecklaceDB;
 using NecklaceModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace NecklaceApplication
 {
+    // vet inte om den ska vara  med
+    static class MyLinqExtensions
+    {
+        public static void Print<T>(this IEnumerable<T> collection)
+        {
+            collection.ToList().ForEach(item => Console.WriteLine(item));
+        }
+    }
     class Program
     {
         private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
@@ -19,10 +29,12 @@ namespace NecklaceApplication
 
             SeedDataBase();
             QueryDatabaseAsync().Wait();
-            QueryDatabase_Linq();
+            //QueryDatabase_Linq();
             QueryDatabase_DataModel_Linq();
-            QueryDatabaseCRUD.Wait();
-          
+            QueryDatabaseCRUD().Wait();
+
+            Console.WriteLine("\nPress any key to terminate");
+            Console.ReadKey();
         }
 
         private static bool BuildOptions()
@@ -45,8 +57,6 @@ namespace NecklaceApplication
             _optionsBuilder.UseSqlServer(connectionString);
             return true;
         }
-
-        #region Uncomment to seed and query the Database
 
         private static void SeedDataBase()
         {
@@ -124,11 +134,124 @@ namespace NecklaceApplication
                 }
             }
         }
-        #endregion
 
+
+        // För pärlan
         private static async Task QueryDatabaseCRUD()
         {
-            // Implement the CRUD operations/tests here testing here
+
+            Console.WriteLine("\nPärlan CRUD");
+            Console.WriteLine("--------------------");
+
+            using (var db = new NecklaceDbContext(_optionsBuilder.Options))
+            {
+                var _repo = new PearlRepository(db);
+                Console.WriteLine("Testing ReadAllAsync()");
+                var AllPearls = await _repo.ReadAllAsync();// läser in alla
+                Console.WriteLine($"Nr of Necklace {AllPearls.Count()}");
+                Console.WriteLine($"\nFirst 5 Necklace");
+                AllPearls.Take(5).Print();
+
+                Console.WriteLine("\nTesting ReadAsync()");
+                Console.WriteLine("--------------------");
+                var LastPearl1 = AllPearls.Last();
+                var LastPearl2 = await _repo.ReadAsync(LastPearl1.PearlID);
+                Console.WriteLine($"Last Pearl.\n{LastPearl1}");
+                Console.WriteLine($"Read Pearl with NecklaceID == Last Necklace\n{LastPearl2}");
+                if (LastPearl1 == LastPearl2)
+                    Console.WriteLine("Pearls Equal");
+                else
+                    Console.WriteLine("ERROR: Pearl not equal");
+
+                Console.WriteLine($"Pearl LAST 1 {LastPearl1}");
+                Console.WriteLine($"Pearl LAST 2 {LastPearl2}");
+
+
+                Console.WriteLine("\nTesting DeleteAsync()");
+                Console.WriteLine("--------------------");
+                var Pearl1ToDelete = AllPearls.Last();
+                var DelPearl1 = await _repo.DeleteAsync(Pearl1ToDelete.PearlID);
+                Console.WriteLine($"Pearl to delete.\n{Pearl1ToDelete}");
+                Console.WriteLine($"Deleted Pearl.\n{DelPearl1}");
+
+                if (DelPearl1 != null && DelPearl1 == Pearl1ToDelete)
+                    Console.WriteLine("Pearl Equal");
+                else
+                    Console.WriteLine("ERROR: Pearl not equal");
+
+                var DelPearl2 = await _repo.ReadAsync(DelPearl1.PearlID);
+                if (DelPearl2 != null)
+                    Console.WriteLine("ERROR: Pearl not removed");
+                else
+                    Console.WriteLine("Pearl confirmed removed from Db");
+
+                Console.WriteLine("\nTesting CreateAsync()");
+                Console.WriteLine("--------------------");
+               
+                
+                var NewPearl1 = Pearl.Factory.CreateRandomPearl();
+
+                Console.WriteLine($"Pearl created.\n{NewPearl1}");
+                
+           
+               
+                    Console.WriteLine("\nHalsbandet CRUD");
+                Console.WriteLine("--------------------");
+
+
+                    
+                    Console.WriteLine("Testing ReadAllAsync()");
+                    Console.WriteLine("--------------------");
+                var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
+                    Console.WriteLine($"Nr of Necklace {AllNecklaces.Count()}");
+                    Console.WriteLine($"\nFirst 5 Necklace");
+                    AllNecklaces.Take(5).Print();
+
+
+                Console.WriteLine("\nTesting ReadAsync()");
+                Console.WriteLine("--------------------");
+                var LastNecklacet1 = AllNecklaces.Last();
+                var LastNecklace2 = await _repo.ReadAsync(LastNecklacet1.NecklaceID);
+                Console.WriteLine($"Last Necklaces with Pearls.\n{LastNecklacet1}");
+                Console.WriteLine($"Read Necklaces with NecklacesID == Last Necklaces\n{LastNecklace2}");
+                if (LastNecklacet1 == LastNecklace2)
+                    Console.WriteLine("Necklaces Equal");
+                else
+                    Console.WriteLine("ERROR: Necklaces not equal");
+
+                Console.WriteLine($"Halsband 1 {LastNecklacet1}");
+                Console.WriteLine($"Halsband 2 {LastNecklace2}");
+
+                Console.WriteLine("\nTesting CreateAsync()");
+                Console.WriteLine("--------------------");
+                var NewNecklace1 = Necklace.Factory.CreateRandomNecklace(1);
+                Console.WriteLine($"Necklace created.\n{NewNecklace1}");
+
+
+                Console.WriteLine("\nTesting DeleteAsync()");
+
+                var LastNecklacet1ToDelete = AllNecklaces.Last();
+                var DelNecklacet1 = await _repo.DeleteAsync(LastNecklacet1ToDelete.NecklaceID);
+                Console.WriteLine($"Necklace to delete.\n{LastNecklacet1ToDelete}");
+
+                Console.WriteLine($"Deleted Necklace.\n{DelNecklacet1}");
+
+                if (DelNecklacet1 != null && DelNecklacet1 == LastNecklacet1ToDelete)
+                    Console.WriteLine("Necklace Equal");
+                else
+                    Console.WriteLine("ERROR: Necklace not equal");
+
+                var DelNecklacet2 = await _repo.ReadAsync(DelNecklacet1.NecklaceID);
+                if (DelNecklacet2 != null)
+                    Console.WriteLine("ERROR: Necklace not removed");
+                else
+                    Console.WriteLine("Necklace confirmed removed from Db");
+
+
+
+
+
+            }
         }
 
     }
