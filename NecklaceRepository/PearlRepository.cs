@@ -17,9 +17,16 @@ namespace NecklaceRepository
             throw new NotImplementedException();
         }
 
-        public Task<Pearl> DeleteAsync(int pearlId)
+        public async Task<Pearl> DeleteAsync(int pearlId)
         {
-            throw new NotImplementedException();
+            var cusDel = await _db.Pearls.FindAsync(pearlId);// FindAsync är inte eget
+            _db.Pearls.Remove(cusDel);
+
+            int affected = await _db.SaveChangesAsync();// SaveChangesAsync är inte eget
+            if (affected == 1)
+                return cusDel;
+            else
+                return null;
         }
 
         public async Task<IEnumerable<Pearl>> ReadAllAsync()

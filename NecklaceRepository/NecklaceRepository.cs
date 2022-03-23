@@ -6,14 +6,28 @@ namespace NecklaceRepository
     public class NecklaceRepository : INecklaceRepository
     {
         NecklaceDbContext _db = null;
-        public Task<Necklace> CreateAsync(Necklace necklace)
+        public async Task<Necklace> CreateAsync(Necklace necklace)
         {
-            throw new NotImplementedException();
+            await _db.Necklaces.AddAsync(necklace);
+
+            int affected = await _db.SaveChangesAsync();
+            if (affected == 1)
+                return necklace;
+            else 
+                return null;
+
         }
 
-        public Task<Necklace> DeleteAsync(int necklaceId)
+        public async Task<Necklace> DeleteAsync(int necklaceId)
         {
-            throw new NotImplementedException();
+            var cusDel = await _db.Necklaces.FindAsync(necklaceId);
+            _db.Necklaces.Remove(cusDel);
+
+            int affected = await _db.SaveChangesAsync();
+            if (affected == 1)
+                return cusDel;
+            else
+                return null;
         }
 
         public async Task<IEnumerable<Necklace>> ReadAllAsync()

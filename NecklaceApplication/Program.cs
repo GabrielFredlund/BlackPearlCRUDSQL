@@ -133,21 +133,31 @@ namespace NecklaceApplication
             Console.WriteLine("\n\nQuery Database CRUDE");
             Console.WriteLine("--------------------");
 
+        
+
+            
+
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
-                Console.WriteLine("Necklace CRUD Async-Testing");
+                Console.WriteLine("\nNecklace CRUD Async-Testing");
                 Console.WriteLine("___________________________");
+
 
                 var _repo = new NecklaceRepository.NecklaceRepository(db);
 
-                Console.WriteLine("Testing ReadAllAsync()");
+                Console.WriteLine("\nTesting CreateAsync-Necklace");
+                Console.WriteLine("____________________________");
+                var NewNecklace = Necklace.Factory.CreateRandomNecklace(25);
+                await _repo.CreateAsync(NewNecklace);
+
+                Console.WriteLine("\nTesting ReadAllAsync-Necklace");
                 var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Amount of Necklaces {AllNecklaces.Count()}");
                 Console.WriteLine($"\nFirst 5 Necklaces");
                 var allNecklaces = AllNecklaces.Take(5);
                 Console.WriteLine(allNecklaces);
 
-                Console.WriteLine("\nTesting ReadAsync()");
+                Console.WriteLine("\nTesting ReadAsync-Necklace");
                 var LastNecklace1 = AllNecklaces.Last();
                 var LastNecklace2 = await _repo.ReadAsync(LastNecklace1.NecklaceID);
                 Console.WriteLine($"Latest Necklace: \n {LastNecklace1}");
@@ -158,7 +168,7 @@ namespace NecklaceApplication
                     Console.WriteLine("Error: Necklaces are not equal.");
 
 
-                Console.WriteLine("Testing DeleteAsync-Necklace");
+                Console.WriteLine("\nTesting DeleteAsync-Necklace");
                 Console.WriteLine("____________________________");
                 var LastNecklacet1ToDelete = AllNecklaces.Last();
                 var DelNecklacet1 = await _repo.DeleteAsync(LastNecklacet1ToDelete.NecklaceID);
@@ -201,17 +211,25 @@ namespace NecklaceApplication
             {
                 var _repo = new NecklaceRepository.PearlRepository(db);
 
-                Console.WriteLine("Pearl CRUD Async-Testing");
+                Console.WriteLine("\nPearl CRUD Async-Testing");
                 Console.WriteLine("________________________");
 
-                Console.WriteLine("\nTesting ReadAllAsync()");
+
+                Console.WriteLine("\nTesting CreateAsync-Pearl");
+                Console.WriteLine("--------------------");
+                var NewPearl1 = Pearl.Factory.CreateRandomPearl();
+                Console.WriteLine($"Pearl created.\n{NewPearl1}");
+
+
+
+                Console.WriteLine("\nTesting ReadAllAsync-Pearl");
                 var AllPearls = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Amount of Pearls {AllPearls.Count()}");
                 Console.WriteLine($"\nFirst 5 Necklace");
                 var allPearls = AllPearls.Take(5);
                 Console.WriteLine(allPearls);
 
-                Console.WriteLine("\nTesting ReadAsync()");
+                Console.WriteLine("\nTesting ReadAsync-Pearl");
                 var LastPearl1 = AllPearls.Last();
                 var LastPearl2 = await _repo.ReadAsync(LastPearl1.PearlID);
                 Console.WriteLine($"\nLatest Pearl: \n {LastPearl1}");
@@ -222,12 +240,13 @@ namespace NecklaceApplication
                     Console.WriteLine("Error: Pearls are not equal.");
 
 
+                Console.WriteLine("\nTesting UpdateAsync-Pearl");
                 LastPearl2.Size += 123;
                 var LastPearl3 = await _repo.UpdateAsync(LastPearl2);
                 Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl2.PearlID} == {LastPearl3.PearlID}");
                 if (LastPearl2.Size == LastPearl3.Size)
                 {
-                    Console.WriteLine("Necklace updated");
+                    Console.WriteLine("Pearl updated");
                     LastPearl3.Size = 25;
 
                     LastPearl3 = await _repo.UpdateAsync(LastPearl3);
@@ -237,7 +256,7 @@ namespace NecklaceApplication
                 else
                     Console.WriteLine("Error: Pearl is not updated");
 
-                Console.WriteLine("Testing DeleteAsync");
+                Console.WriteLine("\nTesting DeleteAsync-Pearl");
                 Console.WriteLine("___________________");
                 var Pearl1ToDelete = AllPearls.Last();
                 var DelPearl1 = await _repo.DeleteAsync(Pearl1ToDelete.PearlID);
