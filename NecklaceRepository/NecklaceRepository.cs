@@ -1,10 +1,11 @@
-﻿
+﻿using NecklaceDB;
 using NecklaceModels;
 
 namespace NecklaceRepository
 {
     public class NecklaceRepository : INecklaceRepository
     {
+        NecklaceDbContext _db = null;
         public Task<Necklace> CreateAsync(Necklace necklace)
         {
             throw new NotImplementedException();
@@ -25,9 +26,18 @@ namespace NecklaceRepository
             throw new NotImplementedException();
         }
 
-        public Task<Necklace> UpdateAsync(Necklace necklaceId)
+        public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
+        {          
+            _db.Necklaces.Update(NecklaceList);
+            int affected = await _db.SaveChangesAsync();
+            if (affected == 1)
+                return NecklaceList;
+            else
+                return null;
+        }
+        public NecklaceRepository(NecklaceDbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
     }
 }
