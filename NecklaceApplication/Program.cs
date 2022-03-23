@@ -157,7 +157,26 @@ namespace NecklaceApplication
                 else
                     Console.WriteLine("Error: Necklaces are not equal.");
 
-                Console.WriteLine("\nTesting UpdateAsync()");
+
+                Console.WriteLine("Testing DeleteAsync-Necklace");
+                Console.WriteLine("____________________________");
+                var LastNecklacet1ToDelete = AllNecklaces.Last();
+                var DelNecklacet1 = await _repo.DeleteAsync(LastNecklacet1ToDelete.NecklaceID);
+                Console.WriteLine($"Necklace to delete.\n{LastNecklacet1ToDelete}");
+
+                Console.WriteLine($"Deleted Necklace.\n{DelNecklacet1}");
+
+                if (DelNecklacet1 != null && DelNecklacet1 == LastNecklacet1ToDelete)
+                    Console.WriteLine("Necklace Equal");
+                else
+                    Console.WriteLine("ERROR: Necklace not equal");
+
+                var DelNecklacet2 = await _repo.ReadAsync(DelNecklacet1.NecklaceID);
+                if (DelNecklacet2 != null)
+                    Console.WriteLine("ERROR: Necklace not removed");
+                else
+                    Console.WriteLine("Necklace confirmed removed from Db");
+
 
                 /*
               -Bänkad för tillfället.
@@ -217,6 +236,24 @@ namespace NecklaceApplication
                 }
                 else
                     Console.WriteLine("Error: Pearl is not updated");
+
+                Console.WriteLine("Testing DeleteAsync");
+                Console.WriteLine("___________________");
+                var Pearl1ToDelete = AllPearls.Last();
+                var DelPearl1 = await _repo.DeleteAsync(Pearl1ToDelete.PearlID);
+                Console.WriteLine($"Pearl to delete.\n{Pearl1ToDelete}");
+                Console.WriteLine($"Deleted Pearl.\n{DelPearl1}");
+
+                if (DelPearl1 != null && DelPearl1 == Pearl1ToDelete)
+                    Console.WriteLine("Pearl Equal");
+                else
+                    Console.WriteLine("ERROR: Pearl not equal");
+
+                var DelPearl2 = await _repo.ReadAsync(DelPearl1.PearlID);
+                if (DelPearl2 != null)
+                    Console.WriteLine("ERROR: Pearl not removed");
+                else
+                    Console.WriteLine("Pearl confirmed removed from Db");
 
 
             }
