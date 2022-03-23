@@ -1,11 +1,15 @@
-﻿using NecklaceDB;
-
+﻿using System.Text;
+using System.Threading.Tasks;
+using NecklaceDB;
 using NecklaceModels;
-
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NecklaceRepository;
+using NecklaceModels;
 namespace NecklaceRepository
 {
     
-    internal class PearlRepository : IPearlRepository
+    public class PearlRepository : IPearlRepository
     {
         NecklaceDbContext _db = null;
         public Task<Pearl> CreateAsync(Pearl pearl)
@@ -18,14 +22,14 @@ namespace NecklaceRepository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Pearl>> ReadAllAsync()
+        public async Task<IEnumerable<Pearl>> ReadAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => _db.Pearls);
         }
 
-        public Task<Pearl> ReadAsync(int pearlId)
+        public async Task<Pearl> ReadAsync(int pearlId)
         {
-            throw new NotImplementedException();
+            return await _db.Pearls.FindAsync(pearlId);
         }
 
         public async Task<Pearl> UpdateAsync(Pearl pearl)

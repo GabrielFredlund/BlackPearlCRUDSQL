@@ -6,11 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using NecklaceRepository;
+using NecklaceRepository;
+using System.IO;
 
 namespace NecklaceApplication
 {
-    class Program
+   public class Program
     {
         private static DbContextOptionsBuilder<NecklaceDbContext> _optionsBuilder;
         static void Main(string[] args)
@@ -18,11 +19,11 @@ namespace NecklaceApplication
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
-            //SeedDataBase();
-            //QueryDatabaseAsync().Wait();
-            //QueryDatabase_Linq();
-            //QueryDatabase_DataModel_Linq();
-            //QueryDatabaseCRUD.Wait();
+            SeedDataBase();
+            QueryDatabaseAsync().Wait();
+            QueryDatabase_Linq();
+            QueryDatabase_DataModel_Linq();
+            QueryDatabaseCRUD.Wait();
           
         }
 
@@ -129,8 +130,87 @@ namespace NecklaceApplication
 
         private static async Task QueryDatabaseCRUD()
         {
-            var _repo = new NecklaceRepository.NecklaceRepository();
-            // Implement the CRUD operations/tests here
+            using (var db = new NecklaceDbContext(_optionsBuilder.Options))
+            {
+                Console.WriteLine("Necklace CRUD Async-Testing");
+                Console.WriteLine("___________________________");
+
+                var _repo = new NecklaceRepository.NecklaceRepository(db);
+
+                Console.WriteLine("Testing ReadAllAsync()");
+                var AllNecklaces = await _repo.ReadAllAsync();// läser in alla
+                Console.WriteLine($"Amount of Necklaces {AllNecklaces.Count()}");
+                Console.WriteLine($"\nFirst 5 Necklaces");
+                var allNecklaces = AllNecklaces.Take(5);
+                Console.WriteLine(allNecklaces);
+
+                Console.WriteLine("\nTesting ReadAsync()");
+                var LastNecklace1 = AllNecklaces.Last();
+                var LastNecklace2 = await _repo.ReadAsync(LastNecklace1.NecklaceID);
+                Console.WriteLine($"Latest Necklace: \n {LastNecklace1}");
+                Console.WriteLine($"Read Necklace with NecklaceID == Last Necklace \n{LastNecklace2}");
+                if (LastNecklace1 == LastNecklace2)
+                    Console.WriteLine("Necklaces are equal");
+                else
+                    Console.WriteLine("Error: Necklaces are not equal.");
+
+                Console.WriteLine("\nTesting UpdateAsync()");
+
+                /*
+              -Bänkad för tillfället.
+
+             LastNecklace1.NecklaceID += "_Updated";
+
+
+             var LastNecklace3 = await _repo.UpdateAsync(LastNecklace2);
+             Console.WriteLine($"Last Necklace with updated ID Value \n{LastNecklace1.NecklaceID == LastNecklace3.NecklaceID}");
+
+             if (LastNecklace3.NecklaceID == LastNecklace1.NecklaceID)
+             {
+                 Console.WriteLine("Necklace updated");
+                 LastNecklace3.NecklaceID = LastNecklace3.NecklaceID;
+
+             }
+
+             */
+            }
+
+            using (var db = new NecklaceDbContext(_optionsBuilder.Options))
+            {
+                var _repo = new NecklaceRepository.PearlRepository(db);
+
+                Console.WriteLine("Pearl CRUD Async-Testing");
+                Console.WriteLine("________________________");
+                
+                Console.WriteLine("\nTesting ReadAllAsync()");
+                var AllPearls = await _repo.ReadAllAsync();// läser in alla
+                Console.WriteLine($"Amount of Pearls {AllPearls.Count()}");
+                Console.WriteLine($"\nFirst 5 Necklace");
+                var allPearls = AllPearls.Take(5);
+                Console.WriteLine(allPearls);
+
+                Console.WriteLine("\nTesting ReadAsync()");
+                var LastPearl1 = AllPearls.Last();
+                var LastPearl2 = await _repo.ReadAsync(LastPearl1.PearlID);
+                Console.WriteLine($"\nLatest Pearl: \n {LastPearl1}");
+                Console.WriteLine($"\nRead Pearl with PearlID == Last Necklace \n{LastPearl2}");
+                if (LastPearl1 == LastPearl2)
+                    Console.WriteLine("Pearls are equal");
+                else
+                    Console.WriteLine("Error: Pearls are not equal.");
+
+
+            }
+
+           
+
+
+
+
+
+
+            
+     
         }
 
         }

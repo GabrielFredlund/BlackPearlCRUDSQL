@@ -1,6 +1,6 @@
 ﻿using NecklaceDB;
 using NecklaceModels;
-
+using NecklaceRepository;
 namespace NecklaceRepository
 {
     public class NecklaceRepository : INecklaceRepository
@@ -16,14 +16,14 @@ namespace NecklaceRepository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Necklace>> ReadAllAsync()
+        public async Task<IEnumerable<Necklace>> ReadAllAsync()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => _db.Necklaces);
         }
 
-        public Task<Necklace> ReadAsync(int necklaceId)
+        public async Task<Necklace> ReadAsync(int necklaceId)
         {
-            throw new NotImplementedException();
+            return await _db.Necklaces.FindAsync(necklaceId);
         }
 
         public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
