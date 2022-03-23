@@ -181,7 +181,7 @@ namespace NecklaceApplication
 
                 Console.WriteLine("Pearl CRUD Async-Testing");
                 Console.WriteLine("________________________");
-                
+
                 Console.WriteLine("\nTesting ReadAllAsync()");
                 var AllPearls = await _repo.ReadAllAsync();// läser in alla
                 Console.WriteLine($"Amount of Pearls {AllPearls.Count()}");
@@ -214,8 +214,9 @@ namespace NecklaceApplication
                 }
                 else
                     Console.WriteLine("Error: Pearl is not updated");
-           
 
+
+            }
 
 
 
