@@ -189,7 +189,7 @@ namespace NecklaceApplication
                 Console.WriteLine("______________________");
 
 
-                if (DelNecklacet1 != null && DelNecklacet1 == LastNecklacet1ToDelete)
+                if (DelNecklacet1 != null && DelNecklacet1.NecklaceID == LastNecklacet1ToDelete.NecklaceID)
                     Console.WriteLine("Necklace Equal");
                 else
                     Console.WriteLine("ERROR: Necklace not equal");
@@ -242,6 +242,7 @@ namespace NecklaceApplication
 
 
                 Console.WriteLine("\nTesting UpdateAsync-Pearl");
+                int pearlSize = LastPearl2.Size;
                 LastPearl2.Size = 15;
                 var LastPearl3 = await _repo.UpdateAsync(LastPearl2);
                 Console.WriteLine($"Last Necklace with updated ID Value \n{LastPearl2.Size} == {LastPearl3.Size}");
@@ -256,6 +257,17 @@ namespace NecklaceApplication
                 }
                 else
                     Console.WriteLine("Error: Pearl is not updated");
+
+                Console.WriteLine("Restoring pearl size.");
+                LastPearl3.Size = pearlSize;
+                var LastPearl4 = await _repo.UpdateAsync(LastPearl3);
+
+                if (LastPearl4 != null && LastPearl4.Size == pearlSize)
+                {
+                    Console.WriteLine("Pearl successfully restored.");
+                }
+                else
+                    Console.WriteLine("Error: Failed to restore pearl.");
 
                 Console.WriteLine("\nTesting DeleteAsync-Pearl");
                 Console.WriteLine("___________________");
