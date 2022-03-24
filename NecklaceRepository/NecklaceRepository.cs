@@ -11,7 +11,7 @@ namespace NecklaceRepository
             await _db.Necklaces.AddAsync(necklace);
 
             int affected = await _db.SaveChangesAsync();
-            if (affected == 1)
+            if (affected >= 1)
                 return necklace;
             else 
                 return null;
@@ -24,7 +24,7 @@ namespace NecklaceRepository
             _db.Necklaces.Remove(cusDel);
 
             int affected = await _db.SaveChangesAsync();
-            if (affected == 1)
+            if (affected >= 1)
                 return cusDel;
             else
                 return null;
@@ -44,7 +44,7 @@ namespace NecklaceRepository
         {          
             _db.Necklaces.Update(NecklaceList);
             int affected = await _db.SaveChangesAsync();
-            if (affected == 1)
+            if (affected >= 1)
                 return NecklaceList;
             else
                 return null;
