@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NecklaceRepository;
+using NecklaceCRUD;
 using System.IO;
 
 namespace NecklaceApplication
@@ -146,7 +146,7 @@ namespace NecklaceApplication
                 Console.WriteLine("___________________________");
 
 
-                var _repo = new NecklaceRepository.NecklaceRepository(db);
+                var _repo = new NecklaceRepository(db);
 
                 Console.WriteLine("\nTesting CreateAsync-Necklace");
                 Console.WriteLine("____________________________");
@@ -206,7 +206,7 @@ namespace NecklaceApplication
 
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
-                var _repo = new NecklaceRepository.PearlRepository(db);
+                var _repo = new PearlRepository(db);
 
                 Console.WriteLine("\nPearl CRUD Async-Testing");
                 Console.WriteLine("________________________");

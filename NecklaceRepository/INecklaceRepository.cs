@@ -1,6 +1,6 @@
 ﻿using NecklaceModels;
 
-namespace NecklaceRepository
+namespace NecklaceCRUD
 {
     public interface INecklaceRepository
     {

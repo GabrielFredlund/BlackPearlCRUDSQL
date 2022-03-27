@@ -1,7 +1,6 @@
 ﻿using NecklaceDB;
 using NecklaceModels;
-using NecklaceRepository;
-namespace NecklaceRepository
+namespace NecklaceCRUD
 {
     public class NecklaceRepository : INecklaceRepository
     {
@@ -13,7 +12,7 @@ namespace NecklaceRepository
             int affected = await _db.SaveChangesAsync();
             if (affected >= 1)
                 return necklace;
-            else 
+            else
                 return null;
 
         }
@@ -41,7 +40,7 @@ namespace NecklaceRepository
         }
 
         public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
-        {          
+        {
             _db.Necklaces.Update(NecklaceList);
             int affected = await _db.SaveChangesAsync();
             if (affected >= 1)

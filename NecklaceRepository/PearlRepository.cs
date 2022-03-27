@@ -4,11 +4,11 @@ using NecklaceDB;
 using NecklaceModels;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using NecklaceRepository;
 using NecklaceModels;
-namespace NecklaceRepository
+
+namespace NecklaceCRUD
 {
-    
+
     public class PearlRepository : IPearlRepository
     {
         NecklaceDbContext _db = null;
@@ -47,7 +47,7 @@ namespace NecklaceRepository
                 return pearl;
             else
                 return null;
- 
+
         }
 
         public PearlRepository(NecklaceDbContext db)

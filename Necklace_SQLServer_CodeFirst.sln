@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		To Model.txt = To Model.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NecklaceRepository", "NecklaceRepository\NecklaceRepository.csproj", "{0B4FD1BD-52A7-480B-BDB1-B3218DCDC01A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NecklaceCRUD", "NecklaceRepository\NecklaceCRUD.csproj", "{0B4FD1BD-52A7-480B-BDB1-B3218DCDC01A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
