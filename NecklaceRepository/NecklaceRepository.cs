@@ -31,12 +31,16 @@ namespace NecklaceCRUD
 
         public async Task<IEnumerable<Necklace>> ReadAllAsync()
         {
-            return await Task.Run(() => _db.Necklaces);
+            var necklaces = await Task.Run(() => _db.Necklaces);
+            var pearls = _db.Pearls.ToList();
+            return necklaces;
         }
 
         public async Task<Necklace> ReadAsync(int necklaceId)
         {
-            return await _db.Necklaces.FindAsync(necklaceId);
+            var necklace = await _db.Necklaces.FindAsync(necklaceId);
+            var pearls = _db.Pearls.ToList();
+            return necklace;
         }
 
         public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
