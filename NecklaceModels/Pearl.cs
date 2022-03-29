@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace NecklaceModels
@@ -23,6 +24,7 @@ namespace NecklaceModels
         [Column("NecklaceID")]
         [ForeignKey(nameof(NecklaceID))]
         public int NecklaceID { get; set; }
+        [JsonIgnore]
         public virtual Necklace Necklace { get; set; }
         #endregion
 

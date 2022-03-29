@@ -20,7 +20,7 @@ namespace NecklaceModels
         public virtual List<Pearl> Pearls { get; set; } = new List<Pearl>();
         #endregion
 
-        public Pearl this[int idx] => Pearls[idx];
+        //public Pearl this[int idx] => Pearls[idx];
         public decimal Price
         {
             get
