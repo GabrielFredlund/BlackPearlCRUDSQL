@@ -39,9 +39,16 @@ namespace NecklaceCRUD
         {
             var necklace = await _db.Necklaces.FindAsync(necklaceId);
 
-            var forceLoad = _db.Pearls.Where(p => p.NecklaceID == necklace.NecklaceID).ToList();
+            if (necklace != null)
+            {
+                var forceLoad = _db.Pearls.Where(p => p.NecklaceID == necklace.NecklaceID).ToList();
+                return necklace;
+            }
 
-            return necklace;
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
