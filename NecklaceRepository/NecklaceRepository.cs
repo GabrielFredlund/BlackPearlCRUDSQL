@@ -31,6 +31,8 @@ namespace NecklaceCRUD
 
         public async Task<IEnumerable<Necklace>> ReadAllAsync()
         {
+            // Force pearls?
+            var pearls = _db.Pearls.ToList();
             return await Task.Run(() => _db.Necklaces);
         }
 
