@@ -1,5 +1,7 @@
 ﻿using NecklaceDB;
 using NecklaceModels;
+using Microsoft.EntityFrameworkCore;
+
 namespace NecklaceCRUD
 {
     public class NecklaceRepository : INecklaceRepository
@@ -38,7 +40,19 @@ namespace NecklaceCRUD
 
         public async Task<Necklace> ReadAsync(int necklaceId)
         {
-            return await _db.Necklaces.FindAsync(necklaceId);
+            var pearls = _db.Pearls.ToList();
+            var neck = await _db.Necklaces.FindAsync(necklaceId);
+
+
+            if (neck != null)
+            {
+                return neck;
+            }
+
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<Necklace> UpdateAsync(Necklace NecklaceList)
