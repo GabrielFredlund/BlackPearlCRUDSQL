@@ -22,7 +22,7 @@ namespace NecklaceApplication
             if (!BuildOptions())
                 return; //Terminate if not build correctly
 
-            //SeedDataBase();
+            SeedDataBase();
             //QueryDatabaseAsync().Wait();
             //QueryDatabase_Linq();
             //QueryDatabase_DataModel_Linq();
@@ -57,12 +57,14 @@ namespace NecklaceApplication
         {
             using (var db = new NecklaceDbContext(_optionsBuilder.Options))
             {
+                db.Necklaces.RemoveRange(db.Necklaces);
+
                 //Create some customers
                 var rnd = new Random();
                 var NecklaceList = new List<Necklace>();
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 100; i++)
                 {
-                    NecklaceList.Add(Necklace.Factory.CreateRandomNecklace(rnd.Next(5, 50)));
+                    NecklaceList.Add(Necklace.Factory.CreateRandomNecklace(rnd.Next(5, 15)));
                 }
 
                 //Add Pearls and Necklaces to the Database
