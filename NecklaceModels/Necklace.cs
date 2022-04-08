@@ -34,6 +34,9 @@ namespace NecklaceModels
                 return price;   
             }
         }
+        public string Country { get; set; }
+        public string NecklaceType { get; set; }
+
 
         public int Count() => Pearls.Count;    
 
@@ -75,17 +78,49 @@ namespace NecklaceModels
             return n;
         }
 
+        public void RandomInit()
+        {
+            string[] Countries = "Indian Spanish African Asian Russian".Split(" ");
+            string[] NecklaceTypes = "Plastic Metal Copper Aluminum".Split(" ");
+            var rnd = new Random();
+            bool AllCool = false;
+            while (!AllCool)
+            {
+                try
+                {
+                    this.Country = Countries[rnd.Next(0, Countries.Length)];
+                    this.NecklaceType = NecklaceTypes[rnd.Next(0, NecklaceTypes.Length)];
+                    AllCool = true;
+                }
+                catch
+                {
+                    
+                } 
+
+            }
+
+
+        
+        }
+
         #region Class Factory for creating an instance filled with Random data
         public static class Factory
         {
+            
             public static Necklace CreateRandomNecklace(int NrOfItems)
             {
                 var necklace = new Necklace();
+                necklace.RandomInit();
                 for (int i = 0; i < NrOfItems; i++)
                 {
+
                     necklace.Pearls.Add(Pearl.Factory.CreateRandomPearl());
                 }
-                return necklace;    
+                
+
+        
+
+                return necklace;
             }
          }
         #endregion

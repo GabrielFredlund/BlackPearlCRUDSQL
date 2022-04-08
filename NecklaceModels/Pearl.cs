@@ -15,6 +15,9 @@ namespace NecklaceModels
         public const int PearlMinSize = 5;
         public const int PearlMaxSize = 25;
 
+         
+
+
         #region for EFC CodeFirst
         [Key]
         [Column("PearlID")]
@@ -78,6 +81,8 @@ namespace NecklaceModels
             this.Color = (PearlColor)rnd.Next((int)PearlColor.Black, (int)PearlColor.Pink + 1);
             this.Shape = (PearlShape)rnd.Next((int)PearlShape.Round, (int)PearlShape.DropShaped + 1);
             this.Type = (PearlType)rnd.Next((int)PearlType.FreshWater, (int)PearlType.SaltWater + 1);
+
+
         }
         public static class Factory
         {
