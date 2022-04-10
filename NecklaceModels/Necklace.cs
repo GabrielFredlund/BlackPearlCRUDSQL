@@ -80,8 +80,8 @@ namespace NecklaceModels
 
         public void RandomInit()
         {
-            string[] Countries = "Indian Spanish African Asian Russian".Split(" ");
-            string[] NecklaceTypes = "Plastic Metal Copper Aluminum".Split(" ");
+            string[] Countries = "Indian Spanish African Cuba Russian French".Split(" ");
+            string[] NecklaceTypes = "Plastic Metal Copper Aluminum Adamantium EbonyOre".Split(" ");
             var rnd = new Random();
             bool AllCool = false;
             while (!AllCool)
